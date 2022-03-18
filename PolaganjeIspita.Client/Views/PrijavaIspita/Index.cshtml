@@ -1,0 +1,46 @@
+﻿@model IEnumerable<PolaganjeIspita.Client.Models.PrijavaIspitaBO>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="row">
+
+    <div class="col-md-3" id="smerovi">
+        <label class="control-label">Predmeti</label>
+        <div>
+            @Html.DropDownList(
+                "Predmeti", 
+                new SelectList(@ViewBag.Predmeti, "Id", "Naziv"), 
+                "Selektuj predmet", 
+                new { @class = "form-control", 
+                    @onchange = "OnSelectedPredmet(this.value)" })
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div id="Ispiti">
+
+    @{Html.RenderAction("GetIspiteByPredmet", "PrijavaIspita", new { id = 0 });}
+
+</div>
+
+<script type="text/javascript">
+
+    function OnSelectedPredmet(predmet) {
+
+        var idPredmeta = predmet;
+        if(idPredmeta === "")
+        {
+            idPredmeta = 0;
+        }
+        $.ajax({
+            url: '@Url.Action("GetIspiteByPredmet", "PrijavaIspita")',
+            data: { id: idPredmeta },
+            success:   function(result) {
+                $('#Ispiti').html(result);
+            }
+        });
+    }
+</script>

@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StudentiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="PredmetModel">
+    <Key>
+      <PropertyRef Name="PredmetID" />
+    </Key>
+    <Property Name="PredmetID" Type="Int32" Nullable="false" />
+    <Property Name="Naziv" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Profesor" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Prijava" Relationship="Self.FK_Prijava_Predmet" FromRole="Predmet" ToRole="Prijava" />
+  </EntityType>
+  <EntityType Name="PrijavaModel">
+    <Key>
+      <PropertyRef Name="PredmetID" />
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="PredmetID" Type="Int32" Nullable="false" />
+    <Property Name="StudentID" Type="Int32" Nullable="false" />
+    <Property Name="Ocena" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Predmet" Relationship="Self.FK_Prijava_Predmet" FromRole="Prijava" ToRole="Predmet" />
+    <NavigationProperty Name="Student" Relationship="Self.FK_Prijava_Student" FromRole="Prijava" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="SmerModel">
+    <Key>
+      <PropertyRef Name="SmerID" />
+    </Key>
+    <Property Name="SmerID" Type="Int32" Nullable="false" />
+    <Property Name="Naziv" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Student" Relationship="Self.FK_Student_Smer" FromRole="Smer" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="StudentModel">
+    <Key>
+      <PropertyRef Name="StudentID" />
+    </Key>
+    <Property Name="StudentID" Type="Int32" Nullable="false" />
+    <Property Name="Ime" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Prezime" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="GodinaUpisa" Type="Int16" Nullable="false" />
+    <Property Name="DatumRodjenja" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Skolarina" Type="Single" Nullable="false" />
+    <Property Name="Prosek" Type="Single" />
+    <Property Name="SmerID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Prijava" Relationship="Self.FK_Prijava_Student" FromRole="Student" ToRole="Prijava" />
+    <NavigationProperty Name="Smer" Relationship="Self.FK_Student_Smer" FromRole="Student" ToRole="Smer" />
+  </EntityType>
+  <Association Name="FK_Prijava_Predmet">
+    <End Role="Predmet" Type="StudentiModel.PredmetModel" Multiplicity="1" />
+    <End Role="Prijava" Type="StudentiModel.PrijavaModel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Predmet">
+        <PropertyRef Name="PredmetID" />
+      </Principal>
+      <Dependent Role="Prijava">
+        <PropertyRef Name="PredmetID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Prijava_Student">
+    <End Role="Student" Type="StudentiModel.StudentModel" Multiplicity="1" />
+    <End Role="Prijava" Type="StudentiModel.PrijavaModel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentID" />
+      </Principal>
+      <Dependent Role="Prijava">
+        <PropertyRef Name="StudentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_Smer">
+    <End Role="Smer" Type="StudentiModel.SmerModel" Multiplicity="1" />
+    <End Role="Student" Type="StudentiModel.StudentModel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Smer">
+        <PropertyRef Name="SmerID" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="SmerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Predmet" EntityType="StudentiModel.PredmetModel" />
+    <EntitySet Name="Prijava" EntityType="StudentiModel.PrijavaModel" />
+    <EntitySet Name="Smer" EntityType="StudentiModel.SmerModel" />
+    <EntitySet Name="Student" EntityType="StudentiModel.StudentModel" />
+    <AssociationSet Name="FK_Prijava_Predmet" Association="Self.FK_Prijava_Predmet">
+      <End Role="Predmet" EntitySet="Predmet" />
+      <End Role="Prijava" EntitySet="Prijava" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Prijava_Student" Association="Self.FK_Prijava_Student">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="Prijava" EntitySet="Prijava" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_Smer" Association="Self.FK_Student_Smer">
+      <End Role="Smer" EntitySet="Smer" />
+      <End Role="Student" EntitySet="Student" />
+    </AssociationSet>
+    <FunctionImport Name="Ispiti" ReturnType="Collection(StudentiModel.Ispiti_Result)" />
+    <FunctionImport Name="ProfQuery" ReturnType="Collection(StudentiModel.ProfQuery_Result)">
+      <Parameter Name="Prof" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spIspiti" ReturnType="Collection(StudentiModel.spIspiti_Result)" />
+    <FunctionImport Name="spJedanPredmet" ReturnType="Collection(StudentiModel.spJedanPredmet_Result)">
+      <Parameter Name="predmetId" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spSviPredmeti" ReturnType="Collection(StudentiModel.spSviPredmeti_Result)" />
+  </EntityContainer>
+  <ComplexType Name="Ispiti_Result">
+    <Property Type="Int32" Name="StudentID" Nullable="false" />
+    <Property Type="Int32" Name="PredmetID" Nullable="false" />
+    <Property Type="String" Name="Naziv" Nullable="false" MaxLength="40" />
+    <Property Type="Int32" Name="Ocena" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="ProfQuery_Result">
+    <Property Type="Int32" Name="PredmetID" Nullable="false" />
+    <Property Type="String" Name="Naziv" Nullable="false" MaxLength="40" />
+    <Property Type="String" Name="Profesor" Nullable="true" MaxLength="30" />
+  </ComplexType>
+  <ComplexType Name="spIspiti_Result">
+    <Property Type="Int32" Name="StudentID" Nullable="false" />
+    <Property Type="Int32" Name="PredmetID" Nullable="false" />
+    <Property Type="String" Name="Naziv" Nullable="false" MaxLength="40" />
+    <Property Type="Int32" Name="Ocena" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="spJedanPredmet_Result">
+    <Property Type="Int32" Name="PredmetID" Nullable="false" />
+    <Property Type="String" Name="Naziv" Nullable="false" MaxLength="40" />
+    <Property Type="String" Name="Profesor" Nullable="true" MaxLength="30" />
+  </ComplexType>
+  <ComplexType Name="spSviPredmeti_Result">
+    <Property Type="Int32" Name="PredmetID" Nullable="false" />
+    <Property Type="String" Name="Naziv" Nullable="false" MaxLength="40" />
+    <Property Type="String" Name="Profesor" Nullable="true" MaxLength="30" />
+  </ComplexType>
+</Schema>

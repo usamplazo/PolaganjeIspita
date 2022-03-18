@@ -1,0 +1,47 @@
+﻿@model IEnumerable<PolaganjeIspita.Client.Models.StudentBO>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Studenti</h2>
+<div class="form-group">
+    @Html.ActionLink("Unos novog studenta", "Create", "Student")
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="list-group">
+            @foreach (var student in Model)
+            {
+                <a class="list-group-item" onclick='OnListItemClick(this, @Html.Raw(Json.Encode(student)));'>
+                    <h6>
+                        @Html.DisplayFor(model => student.Ime) @Html.DisplayFor(model => student.Prezime)
+                    </h6>
+                </a>
+            }
+
+        </div>
+    </div>
+    <div class="col-md-6" id="detaljiStudenta" style="visibility: hidden">
+        <label class="control-label">Detalji studenta:</label>
+        <p id="detaljiStudentaText"></p>
+        <input id="editButton" type="button" class="btn" value ="Azuriraj"/>
+        <input id="deleteButton" type="button" class="btn" value="Obrisi"/>
+    </div>
+</div>
+
+<script>
+    function OnListItemClick(htmlItem, student) {
+        $('a.list-group-item.active').removeClass('active');
+        $(htmlItem).addClass('active');
+        document.getElementById('detaljiStudenta').style.visibility = "visible";
+        document.getElementById("detaljiStudentaText").innerHTML =
+            "Godina upisa: " + student.GodinaUpisa + "<br>Smer: " + student.Smer.Naziv;
+        document.getElementById('editButton').onclick = function() {
+            window.location.href = "../Student/Edit/" + student.Id;
+        }
+        document.getElementById('deleteButton').onclick = function() {
+            window.location.href = "../Student/Delete/" + student.Id;
+        }
+    }
+</script>
+

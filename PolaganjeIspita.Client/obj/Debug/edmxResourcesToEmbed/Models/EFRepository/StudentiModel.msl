@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="StudentiModelStoreContainer" CdmEntityContainer="StEntities">
+    <EntitySetMapping Name="Predmet">
+      <EntityTypeMapping TypeName="StudentiModel.PredmetModel">
+        <MappingFragment StoreEntitySet="Predmet">
+          <ScalarProperty Name="PredmetID" ColumnName="PredmetID" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="Profesor" ColumnName="Profesor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Prijava">
+      <EntityTypeMapping TypeName="StudentiModel.PrijavaModel">
+        <MappingFragment StoreEntitySet="Prijava">
+          <ScalarProperty Name="PredmetID" ColumnName="PredmetID" />
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="Ocena" ColumnName="Ocena" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Smer">
+      <EntityTypeMapping TypeName="StudentiModel.SmerModel">
+        <MappingFragment StoreEntitySet="Smer">
+          <ScalarProperty Name="SmerID" ColumnName="SmerID" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Student">
+      <EntityTypeMapping TypeName="StudentiModel.StudentModel">
+        <MappingFragment StoreEntitySet="Student">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="Ime" ColumnName="Ime" />
+          <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+          <ScalarProperty Name="GodinaUpisa" ColumnName="GodinaUpisa" />
+          <ScalarProperty Name="DatumRodjenja" ColumnName="DatumRodjenja" />
+          <ScalarProperty Name="Skolarina" ColumnName="Skolarina" />
+          <ScalarProperty Name="Prosek" ColumnName="Prosek" />
+          <ScalarProperty Name="SmerID" ColumnName="SmerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Ispiti" FunctionName="StudentiModel.Store.Ispiti">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StudentiModel.Ispiti_Result">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="PredmetID" ColumnName="PredmetID" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="Ocena" ColumnName="Ocena" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ProfQuery" FunctionName="StudentiModel.Store.ProfQuery">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StudentiModel.ProfQuery_Result">
+          <ScalarProperty Name="PredmetID" ColumnName="PredmetID" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="Profesor" ColumnName="Profesor" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spIspiti" FunctionName="StudentiModel.Store.spIspiti">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StudentiModel.spIspiti_Result">
+          <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+          <ScalarProperty Name="PredmetID" ColumnName="PredmetID" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="Ocena" ColumnName="Ocena" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spJedanPredmet" FunctionName="StudentiModel.Store.spJedanPredmet">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StudentiModel.spJedanPredmet_Result">
+          <ScalarProperty Name="PredmetID" ColumnName="PredmetID" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="Profesor" ColumnName="Profesor" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spSviPredmeti" FunctionName="StudentiModel.Store.spSviPredmeti">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="StudentiModel.spSviPredmeti_Result">
+          <ScalarProperty Name="PredmetID" ColumnName="PredmetID" />
+          <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+          <ScalarProperty Name="Profesor" ColumnName="Profesor" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Studenti" Class="StudentiDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-RQVD4D5;Initial Catalog=Studenti;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="StudentiConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Student" Member="Students">
+    <Type Name="Student">
+      <Column Name="StudentID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Ime" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="Prezime" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="GodinaUpisa" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="DatumRodjenja" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Skolarina" Type="System.Single" DbType="Real NOT NULL" CanBeNull="false" />
+      <Column Name="Prosek" Type="System.Single" DbType="Real" CanBeNull="true" />
+      <Column Name="SmerID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Student_Prijava" Member="Prijavas" ThisKey="StudentID" OtherKey="StudentID" Type="Prijava" />
+      <Association Name="Smer_Student" Member="Smer" ThisKey="SmerID" OtherKey="SmerID" Type="Smer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Smer" Member="Smers">
+    <Type Name="Smer">
+      <Column Name="SmerID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Naziv" Type="System.String" DbType="NChar(40) NOT NULL" CanBeNull="false" />
+      <Association Name="Smer_Student" Member="Students" ThisKey="SmerID" OtherKey="SmerID" Type="Student" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Prijava" Member="Prijavas">
+    <Type Name="Prijava">
+      <Column Name="PredmetID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="StudentID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Ocena" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Student_Prijava" Member="Student" ThisKey="StudentID" OtherKey="StudentID" Type="Student" IsForeignKey="true" />
+      <Association Name="Predmet_Prijava" Member="Predmet" ThisKey="PredmetID" OtherKey="PredmetID" Type="Predmet" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Predmet" Member="Predmets">
+    <Type Name="Predmet">
+      <Column Name="PredmetID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Naziv" Type="System.String" DbType="NVarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="Profesor" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Association Name="Predmet_Prijava" Member="Prijavas" ThisKey="PredmetID" OtherKey="PredmetID" Type="Prijava" />
+    </Type>
+  </Table>
+</Database>

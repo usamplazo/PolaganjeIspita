@@ -1,0 +1,39 @@
+﻿@model IEnumerable<PolaganjeIspita.Client.Models.PrijavaIspitaBO>
+
+<table class="table">
+    <tr>
+        <th>
+            Smer
+        </th>
+        <th>
+            Ime i prezime
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Predmet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ocena)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.Smer.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.Ime) @Html.DisplayFor(modelItem => item.Student.Prezime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Predmet.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ocena)
+            </td>
+        </tr>
+    }
+
+</table>
